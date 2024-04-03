@@ -18,5 +18,11 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #eff2f4;
+}
+
+footer .container {
+    background-color: #373737;
+    color: #e0e0e0;
 }

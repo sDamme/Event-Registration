@@ -1,8 +1,47 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Avaleht";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-3 p-0">
+    <div class="row g-0 pb-4">
+        <div style="width: 49%;">
+            <div class="bg-primary text-white h-100 d-flex align-items-center p-4">
+                <div>
+                    <h3>Sed nex elit vestibulum, <strong>tincidunt orci</strong> et, sagittis ex. Vestibulum rutrum <strong>neque sucipit</strong> ante mattis maximus. Nulla non sapien <strong>viverra, lobortis lorem non,</strong> accumsan metus. </h3>
+                </div>
+            </div>
+        </div>
+        <div style="width: 51%;">
+            <img src="~/images/pargipink.jpg" alt="Park Bench" class="img-fluid w-100">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <div class="card rounded-0">
+                <div class="card-body p-0">
+                    <div class="card-header bg-primary text-white text-center rounded-0">
+                        <h5>Tulevased üritused</h5>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li>Aenean commodo - 14.02.2016</li>
+                    </ul>
+                    <button class="btn btn-primary">Lisa üritus</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card rounded-0">
+                <div class="card-body p-0">
+                    <div class="card-header bg-primary text-white text-center rounded-0">
+                        <h5>Toiminud üritused</h5>
+                    </div>
+                    <ul class="list-unstyled">
+                        <li>Aenean commodo - 14.01.2016</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

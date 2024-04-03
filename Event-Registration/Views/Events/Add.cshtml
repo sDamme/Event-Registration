@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Ürituse Lisamine";
+}
+
+<div class="container mt-3 p-0 bg-white">
+    <div class="row g-0" style="height: 90px; overflow: hidden;">
+        <div class="col-md-3">
+            <div class="bg-primary text-white d-flex align-items-center p-4">
+                <div>
+                    <h3>@ViewData["Title"]</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <img src="~/images/libled.jpg" alt="Muru Libled" class="img-fluid w-100">
+        </div>
+    </div>
+
+    
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="">
+                    <div class="card-title text-blue text-left">
+                        <h3>@ViewData["Title"]</h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <form>
+                            <div class="mb-3">
+                                <label for="eventName" class="form-label col-md-3">Ürituse nimi:</label>
+                                <input type="text" class="col-md-8" id="eventName" placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="eventDate" class="form-label col-md-3">Toimumisaeg:</label>
+                                <input type="text" class="col-md-8" id="eventDate" placeholder="pp/kk/aaaa hh:mm">
+                            </div>
+                            <div class="mb-3">
+                                <label for="eventLocation" class="form-label col-md-3">Koht:</label>
+                                <input type="text" class="col-md-8" id="eventLocation" placeholder="">
+                            </div>
+                            <div class="mb-3">
+                                <label for="additionalInfo" class="form-label col-md-3">Lisainfo:</label>
+                                <textarea class="col-md-8" id="additionalInfo" rows="3"></textarea>
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                                <button type="button" class="btn btn-secondary">Tagasi</button>
+                                <button type="submit" class="btn btn-primary">Lisa</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+  
+    </div>
+</div>

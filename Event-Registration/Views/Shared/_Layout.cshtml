@@ -10,9 +10,11 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Event_Registration</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
+            <div class="container bg-white">
+                <a class="me-4 ms-4" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/proovilogo.png" alt="Event Registration Logo">
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,25 +22,56 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link @Html.IsActive("Home", "Index")" asp-area="" asp-controller="Home" asp-action="Index">Avaleht</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link @Html.IsActive("Events", "Add")" asp-area="" asp-controller="Events" asp-action="Add">Ürituse Lisamine</a>
                         </li>
                     </ul>
+                    <img class="me-4 py-2" src="~/images/proovilogo2.png" alt="Secondary Logo">
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+
+    <div class="container p-0">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - Event_Registration - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="footer text-muted">
+        <div class="container p-0">
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <h5>Curabitur</h5>
+                    <p>Emauris</p>
+                    <p>Kfringilla</p>
+                    <p>Oin magna sem</p>
+                    <p>Kelementum</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Fusce</h5>
+                    <p>Econsectetur</p>
+                    <p>Ksollicitudin</p>
+                    <p>Omvulputate</p>
+                    <p>Nunc fringilla tellu</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Kontakt</h5>
+                    <h6>Peakontor: Tallinnas</h6>
+                    <p>Väike-Ameerika 1, 11415 Tallinn</p>
+                    <p>Telefon: 605 4450</p>
+                    <p>Faks: 605 3186</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>NaN</h5>
+                    <h6>Harukontor: Võrus</h6>
+                    <p>Oja tn 7 (külastusaadress)</p>
+                    <p>Telefon: 605 3330</p>
+                    <p>Faks: 605 3155</p>
+                </div>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
