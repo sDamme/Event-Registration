@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  webapp:
+    image: ${DOCKER_REGISTRY-}eventregistration
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "32777:8080"
+      - "32778:8081"
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: masterpassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
