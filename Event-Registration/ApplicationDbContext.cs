@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Event_Registration;
 
@@ -43,10 +44,13 @@ public class Event
 {
     public int Id { get; set; }
     public required string Name { get; set; }
-    public DateTime Time { get; set; }
+
+    public required DateTime Time { get; set; }
+
     public required string Location { get; set; }
     public required string ExtraInformation { get; set; }
-    public required ICollection<Guest> Guests { get; set; }
+
+    public ICollection<Guest>? Guests { get; set; }
 }
 
 public abstract class Guest
