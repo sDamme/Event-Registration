@@ -1,42 +1,70 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
+using Event_Registration.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Event_Registration.Controllers
 {
-    public class EventsController : Controller
+    public class EventsController(ApplicationDbContext context) : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context = context;
 
-        public EventsController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        public IActionResult Add()
+        public IActionResult AddEvent()
         {
             return View();
         }
 
-        [HttpPost]
-        public IActionResult Add(Event model)
+        public IActionResult EventDetails(int id)
         {
+            var eventItem = _context.Events.Include(e => e.Guests).FirstOrDefault(e => e.Id == id);
 
-            // TODO: transform formatted input into DateTime that is accepted by DB
-            // model.Time = DateTime.Parse(model.Time.ToString("yyyy-MM-dd HH:mm:ss"));
+            if (eventItem == null)
+            {
+                return NotFound();
+            }
 
-            if (model.Time <= DateTime.Now)
+            var model = new AttendeesViewModel
+            {
+                EventId = eventItem.Id,
+                Name = eventItem.Name,
+                Time = eventItem.Time,
+                Location = eventItem.Location,
+                Guests = eventItem.Guests.ToList()
+            };
+
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult AddEvent(EventViewModel viewModel)
+        {
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("FLE Standard Time");
+            var nowInEstonia = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, timeZoneInfo);
+
+            if (viewModel.Time <= nowInEstonia)
             {
                 ModelState.AddModelError("Time", "Ürituse aeg peab olema tulevikus.");
             }
 
+
             if (ModelState.IsValid)
             {
-                _context.Events.Add(model);
+                var eventToAdd = new Event
+                {
+                    Name = viewModel.Name,
+                    Time = DateTime.SpecifyKind(viewModel.Time, DateTimeKind.Utc),
+                    Location = viewModel.Location,
+                    ExtraInformation = viewModel.ExtraInformation
+                };
+
+                _context.Events.Add(eventToAdd);
                 _context.SaveChanges();
 
                 return RedirectToAction("Index", "Home");
             }
 
-            return View(model);
+            return View(viewModel);
         }
     }
 }

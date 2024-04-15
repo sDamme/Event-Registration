@@ -1,0 +1,155 @@
+﻿@model Event_Registration.Models.AttendeesViewModel
+@{
+    ViewData["Title"] = "Osavõtjad";
+    int totalAttendees = Model.Guests.Where(g => g is Individual).Count() +
+                        Model.Guests.OfType<Business>().Sum(b => b.NumberOfAttendees);
+
+}
+
+<div class="container mt-3 p-0 bg-white">
+    <div class="row g-0" style="height: 90px; overflow: hidden;">
+        <div class="col-md-3">
+            <div class="bg-primary text-white d-flex align-items-center p-4">
+                <div>
+                    <h3>@ViewData["Title"]</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <img src="~/images/libled.jpg" alt="Muru Libled" class="img-fluid w-100">
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center pt-5 pb-2">
+        <div class="col-md-6">
+            <h4 class="pb-4">Ürituse detailid:</h4>
+
+            <div class="row mb-3">
+                <div class="col-md-3">Ürituse nimi:</div>
+                <div class="col-md-8">@Model.Name</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">Toimumisaeg:</div>
+                <div class="col-md-8">@Model.Time.ToString("dd MMMM yyyy HH:mm")</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">Koht:</div>
+                <div class="col-md-8">@Model.Location</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">Koht:</div>
+                <div class="col-md-8">@Model.Location</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">Osavõtjate arv:</div>
+                <div class="col-md-8">@totalAttendees</div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-3">Osavõtjad:</div>
+                <div class="col-md-8">
+                    @if (Model.Guests.Any())
+                    {
+                        <div class="list-group list-group-flush">
+                            @for (int i = 0; i < Model.Guests.Count; i++)
+                            {
+                                var guest = Model.Guests[i];
+                                <div class="list-group-item border-0 d-flex justify-content-between align-items-center p-0">
+                                    
+                                        @if (guest is Individual individual)
+                                        {
+                                            <div class="col-md-4">
+                                                <span>@(i + 1). @individual.FirstName @individual.LastName</span>
+                                            </div>
+
+                                            <div class="col-md-3">
+                                                <span>@individual.PersonalIdCode</span>
+                                            </div>
+                                        }
+                                        else if (guest is Business business)
+                                        {
+                                            <div class="col-md-4">
+                                                <span>@(i + 1). @business.LegalName</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <span>@business.RegistrationCode</span>
+                                            </div>
+                                        }
+                                    
+                                    <div class="col-md-3 text-end">
+                                        <a asp-controller="Attendees" asp-action="EditAttendee" asp-route-guestId="@guest.Id">Vaata</a>
+                                    </div>
+                                    <div class="col-md-2 text-end">
+                                        <form asp-controller="Attendees" asp-action="DeleteAttendee" method="post">
+                                            <input type="hidden" name="guestId" value="@guest.Id" />
+                                            <input type="hidden" name="eventId" value="@Model.EventId" />
+                                            <button type="submit" class="btn btn-link">Kustuta</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p>Osavõtjaid pole hetkel.</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center pt-2 pb-5">
+        <div class="col-md-6">
+            <h4 class="pb-4">Lisa osavõtja:</h4>
+                <div class="row mb-3">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" asp-for="AttendeeType" value="Individual" id="individualRadio" checked onchange="toggleAttendeeForm()" />
+                            <label class="form-check-label" for="individualRadio">Eraisik</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" asp-for="AttendeeType" value="Business" id="businessRadio" onchange="toggleAttendeeForm()" />
+                            <label class="form-check-label" for="businessRadio">Ettevõte</label>
+                        </div>
+                    </div>
+                </div>
+
+    
+               <!-- Conditionally render the correct partial form -->
+                <div id="individualForm" style="display: @(Model.AttendeeType == "Individual" ? "block" : "none");">
+                    @{
+                        ViewData["EventId"] = Model.EventId;
+                    }
+                    <partial name="~/Views/Events/Forms/IndividualForm.cshtml" model="new Individual()" />
+                </div>
+                <div id="businessForm" style="display: @(Model.AttendeeType == "Business" ? "block" : "none");">
+                    @{
+                        ViewData["EventId"] = Model.EventId;
+                    }
+                    <partial name="~/Views/Events/Forms/BusinessForm.cshtml" model="new Business()" />
+                </div>
+              
+           
+        </div>
+    </div>
+
+</div>
+
+<script>
+    function toggleAttendeeForm() {
+        var attendeeType = document.querySelector('input[name="AttendeeType"]:checked').value;
+        if (attendeeType === 'Individual') {
+            document.getElementById('individualForm').style.display = '';
+            document.getElementById('businessForm').style.display = 'none';
+        } else {
+            document.getElementById('individualForm').style.display = 'none';
+            document.getElementById('businessForm').style.display = '';
+        }
+    }
+    // Call toggleAttendeeForm on page load to set the initial state
+    document.addEventListener('DOMContentLoaded', toggleAttendeeForm);
+</script>

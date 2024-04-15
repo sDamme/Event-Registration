@@ -1,0 +1,50 @@
+﻿@model Event_Registration.Models.Business
+@{
+    var actionName = Model.Id == 0 ? "AddBusinessAttendee" : "EditBusinessAttendee";
+    var eventId = Model.EventId.HasValue ? Model.EventId.Value.ToString() : ViewData["EventId"].ToString();
+}
+
+<form asp-controller="Attendees" asp-action="@actionName" method="post" id="businessForm">
+    <input type="hidden" asp-for="EventId" value="@eventId" />
+    <input type="hidden" asp-for="Id" name="Id" />
+    <!-- Business specific fields -->
+    <div class="row mb-3">
+        <label for="legalName" class="col-md-3 form-label">Juriidiline nimi:</label>
+        <div class="col-md-8">
+            <input type="text" class="form-control" asp-for="LegalName" id="legalName" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="RegistrationCode" class="col-md-3 form-label">Registrikood:</label>
+        <div class="col-md-8">
+            <input type="text" class="form-control" asp-for="RegistrationCode" id="RegistrationCode" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="NumberOfAttendees" class="col-md-3 form-label">Osavõtjate arv:</label>
+        <div class="col-md-8">
+            <input type="number" class="form-control" asp-for="NumberOfAttendees" id="NumberOfAttendees" />
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="businessPaymentType" class="col-md-3 form-label">Makseviis:</label>
+        <div class="col-md-8">
+            <select class="form-select" asp-for="PaymentType" id="businessPaymentType">
+                <option value="" disabled selected hidden>Vali makseviis</option>
+                <option value="Cash">Sularaha</option>
+                <option value="BankTransfer">Pangaülekanne</option>
+            </select>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="ExtraInformation" class="col-md-3 form-label">Lisainfo:</label>
+        <div class="col-md-8">
+            <textarea class="form-control" asp-for="ExtraInformation" id="ExtraInformation" rows="3"></textarea>
+        </div>
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <button type="button" class="btn btn-secondary" onclick="history.back();">Tagasi</button>
+        <button type="submit" class="btn btn-primary">Salvesta</button>
+    </div>
+</form>

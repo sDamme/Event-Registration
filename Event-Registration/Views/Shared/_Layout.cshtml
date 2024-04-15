@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
             <div class="container bg-white">
-                <a class="me-4 ms-4" asp-area="" asp-controller="Home" asp-action="Index">
+                <a class="me-4 ms-4" asp-controller="Home" asp-action="Index">
                     <img src="~/images/proovilogo.png" alt="Event Registration Logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -22,10 +22,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link @Html.IsActive("Home", "Index")" asp-area="" asp-controller="Home" asp-action="Index">Avaleht</a>
+                            <a class="nav-link @Html.IsActive("Home", "Index")" asp-controller="Home" asp-action="Index">Avaleht</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @Html.IsActive("Events", "Add")" asp-area="" asp-controller="Events" asp-action="Add">Ürituse Lisamine</a>
+                            <a class="nav-link @Html.IsActive("Events", "Index")" asp-controller="Events" asp-action="AddEvent">Ürituse Lisamine</a>
                         </li>
                     </ul>
                     <img class="me-4 py-2" src="~/images/proovilogo2.png" alt="Secondary Logo">
@@ -42,7 +42,7 @@
 
     <footer class="footer text-muted">
         <div class="container p-0">
-            <div class="row mt-3">
+            <div class="row mt-3 p-5">
                 <div class="col-md-3">
                     <h5>Curabitur</h5>
                     <p>Emauris</p>
@@ -65,7 +65,7 @@
                     <p>Faks: 605 3186</p>
                 </div>
                 <div class="col-md-3">
-                    <h5>NaN</h5>
+                    <br/>
                     <h6>Harukontor: Võrus</h6>
                     <p>Oja tn 7 (külastusaadress)</p>
                     <p>Telefon: 605 3330</p>

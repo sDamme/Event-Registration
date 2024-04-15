@@ -1,0 +1,61 @@
+﻿@model Event_Registration.Models.EventViewModel
+@{
+    ViewData["Title"] = "Ürituse Lisamine";
+}
+
+<div class="container mt-3 p-0 bg-white">
+    <div class="row g-0" style="height: 90px; overflow: hidden;">
+        <div class="col-md-3">
+            <div class="bg-primary text-white d-flex align-items-center p-4">
+                <div>
+                    <h3>@ViewData["Title"]</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <img src="~/images/libled.jpg" alt="Muru Libled" class="img-fluid w-100">
+        </div>
+    </div>
+
+
+    <div class="row justify-content-center py-5">
+        <div class="col-md-6">
+            <div class="card-title text-blue text-left">
+                <h3 class="pb-4">@ViewData["Title"]</h3>
+            </div>
+            <div class="card-body p-0">
+                <form asp-controller="Events" asp-action="AddEvent" method="post">
+                    <div class="row mb-3">
+                        <label for="eventName" class="col-md-3 form-label">Ürituse nimi:</label>
+                        <div class="col-md-8">
+                            <input asp-for="Name" class="form-control" id="eventName">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="eventDate" class="col-md-3 form-label">Toimumisaeg:</label>
+                        <div class="col-md-8">
+                            <input type="text" asp-for="Time" class="form-control" id="eventDate" placeholder="pp/kk/aaaa hh:mm">
+                            <span asp-validation-for="Time" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="eventLocation" class="col-md-3 form-label">Koht:</label>
+                        <div class="col-md-8">
+                            <input asp-for="Location" class="form-control" id="eventLocation">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="additionalInfo" class="col-md-3 form-label">Lisainfo:</label>
+                        <div class="col-md-8">
+                            <textarea asp-for="ExtraInformation" class="form-control" id="additionalInfo" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Tagasi</a>
+                        <button type="submit" class="btn btn-primary">Lisa</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

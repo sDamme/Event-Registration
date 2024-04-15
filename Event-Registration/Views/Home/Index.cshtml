@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Avaleht";
 }
+@using System.Linq
 
 <div class="container mt-3 p-0">
     <div class="row g-0 pb-4">
@@ -23,10 +24,31 @@
                     <div class="card-header bg-primary text-white text-center rounded-0">
                         <h5>Tulevased üritused</h5>
                     </div>
-                    <ul class="list-unstyled">
-                        <li>Aenean commodo - 14.02.2016</li>
-                    </ul>
-                    <button class="btn btn-primary">Lisa üritus</button>
+                    @if (Model.UpcomingEvents != null && Model.UpcomingEvents.Count > 0)
+                    {
+                        <div class="list-group list-group-flush">
+                            @for (int i = 0; i < Model.UpcomingEvents.Count; i++)
+                            {
+                                <div class="list-group-item border-0 d-flex justify-content-between align-items-center">
+                                    <div class="col-md-9">
+                                        <a asp-controller="Events" asp-action="EventDetails" asp-route-id="@Model.UpcomingEvents[i].Id">@($"{i + 1}. {Model.UpcomingEvents[i].Name}")</a>
+                                    </div>
+                                    <div class="col-md-2 text-end">@($"{Model.UpcomingEvents[i].Time:dd.MM.yyyy}")</div>
+                                    
+                                    <form class="col-md-1 text-end" asp-action="DeleteEvent" asp-controller="Home" asp-route-id="@Model.UpcomingEvents[i].Id" method="post">
+                                        <button type="submit" class="btn btn-link p-0">X</button>
+                                    </form>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="p-3">Tulevased üritused puuduvad</div>
+                    }
+                    <div class="card-footer border-0 bg-white">
+                        <a class="btn btn-primary" asp-controller="Events" asp-action="AddEvent">Lisa üritus</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -36,12 +58,29 @@
                     <div class="card-header bg-primary text-white text-center rounded-0">
                         <h5>Toiminud üritused</h5>
                     </div>
-                    <ul class="list-unstyled">
-                        <li>Aenean commodo - 14.01.2016</li>
-                    </ul>
+                    @if (Model.PastEvents != null && Model.PastEvents.Count > 0)
+                    {
+                        <div class="list-group list-group-flush">
+                            @for (int i = 0; i < Model.PastEvents.Count; i++)
+                            {
+                                <div class="list-group-item border-0 d-flex justify-content-between align-items-center">
+                                    <div class="col-md-7">
+                                        <a href="/Events/Attendees/@Model.PastEvents[i].Id">@($"{i + 1}. {Model.PastEvents[i].Name}")</a>
+                                    </div>
+                                    <div class="col-md-5 text-end">@($"{Model.PastEvents[i].Time:dd.MM.yyyy}")</div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="p-3">Toiminud üritused puuduvad</div>
+                    }
                 </div>
             </div>
         </div>
     </div>
+
+
 
 </div>
